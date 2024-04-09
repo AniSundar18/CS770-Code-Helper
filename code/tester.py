@@ -3,13 +3,8 @@ import sys
 import os
 import json
 
-
-
-# DO NOT MODIFY
-<FUNCTION>
-
 def run_tests(question, f):
-    with open("test_cases.json", 'r') as file:
+    with open("../testing/test_cases_python.json", 'r') as file:
         test_cases = json.load(file)
     original_stdout = sys.stdout
     tcs = test_cases[question]
@@ -19,8 +14,9 @@ def run_tests(question, f):
         f(n)
         output = sys.stdout.getvalue()
         sys.stdout = original_stdout  # Reset stdout back to original
-        assert output.strip() == expected.strip(), f"Test failed for n={n}. \n\nExpected:\\n{expected}\\nActual:\\n{output}"
+        try:
+            assert output.strip() == expected.strip()
+        except Exception as e:
+            print(f"Test failed for n={n}. \n\nExpected:\n{expected}\nActual:\n{output}")
+            return
     print("All tests passed!")
-
-question = <QUESTION>
-run_tests(question, <FUNCTION_NAME>)
